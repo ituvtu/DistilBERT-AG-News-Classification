@@ -10,32 +10,38 @@ try:
     pipe = pipeline("text-classification", model=model_name)
     print(f"Model {model_name} has been successfully downloaded.")
 except Exception as e:
-    print(f"Model loading error: {e}")
-
-    pipe = lambda text, **kwargs: [{"label": f"ERROR: {e}", "score": 0.0}]
+    model_load_error = str(e)
+    print(f"Model loading error: {model_load_error}")
 
 
 def predict_news_category(text):
     
+    if pipe is None:
+        return {f"Critical error: Model failed to load.": 0.0,
+                f"Error: {model_load_error}": 0.0}
 
-    predictions = pipe(text, return_all_scores=True)
-    
-    formatted_output = {}
-    
+    if not text or text.strip() == "":
+        return {"Enter text for analysis": 0.0}
+
     try:
-        # {"World": 0.1, "Sports": 0.7, ...}
+        predictions = pipe(text, return_all_scores=True)
+    except Exception as e:
+        return {f"Error during forecasting: {e}": 0.0}
+
+    formatted_output = {}
+    try:
         if predictions and predictions[0]:
             for pred in predictions[0]:
                 label_num_str = pred['label']
                 score = pred['score']
-                
                 label_index = int(label_num_str.split('_')[-1])
                 readable_label = id2label.get(label_index, "Unknown")
-                
                 formatted_output[readable_label] = score
-    
+        else:
+            return {"The model did not return a result.": 0.0}
+            
     except Exception as e:
-        return {f"Помилка обробки: {e}": 0.0}
+        return {f"Output formatting error: {e}": 0.0}
 
     return formatted_output
 
