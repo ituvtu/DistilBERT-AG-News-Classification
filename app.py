@@ -32,10 +32,8 @@ def predict_news_category(text):
     try:
         if predictions and predictions[0]:
             for pred in predictions[0]:
-                label_num_str = pred['label']
+                readable_label = pred['label'] 
                 score = pred['score']
-                label_index = int(label_num_str.split('_')[-1])
-                readable_label = id2label.get(label_index, "Unknown")
                 formatted_output[readable_label] = score
         else:
             return {"The model did not return a result.": 0.0}
