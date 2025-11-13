@@ -2,7 +2,7 @@ import gradio as gr
 from transformers import pipeline
 
 
-model_name = "ituvtu/distilbert-ag-news" 
+model_name = "ituvtu/distilbert-ag-news-classifier" 
 
 id2label = {0: "World", 1: "Sports", 2: "Business", 3: "Sci/Tech"}
 
