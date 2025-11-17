@@ -1,6 +1,6 @@
 import gradio as gr
 from transformers import pipeline
-
+import json
 
 model_name = "ituvtu/distilbert-ag-news-classifier" 
 
@@ -43,28 +43,19 @@ def predict_news_category(text):
 
     return formatted_output
 
-
-examples = [
-    # 0: World
-    ["Global leaders meet for climate change summit."],
-    ["Tensions rise in Middle East after new treaty."],
-    ["Brexit trade deal negotiations stall over fishing rights."], 
-    
-    # 1: Sports
-    ["Olympic athlete breaks world record in 100m sprint."],
-    ["Local football team wins championship."],
-    ["Manchester United announces record-breaking sponsorship deal."], 
-    
-    # 2: Business
-    ["Federal Reserve to announce interest rate decision."],
-    ["Stock market hits all-time high amid tech boom."],
-    ["Tesla unveils new battery technology, stock soars."], 
-    
-    # 3: Sci/Tech
-    ["New discovery on Mars could change everything."],
-    ["Researchers develop new AI capable of writing code."],
-    ["Massive cybersecurity breach exposes government data."]
-]
+def load_examples(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            examples = json.load(f)
+        print(f"Examples from {file_path} have been successfully downloaded.")
+        return examples
+    except FileNotFoundError:
+        print(f"ERROR: File {file_path} not found.")
+        return [["Error: example file not found."]]
+    except Exception as e:
+        print(f"ERROR when reading {file_path}: {e}")
+        return [[f"JSON reading error: {e}"]]
+examples = load_examples("examples.json")
 
 # Interface
 title = "News classifier (AG News)"
@@ -72,11 +63,8 @@ description = "Enter a news headline, and the DistilBERT model (trained on AG Ne
 
 iface = gr.Interface(
     fn=predict_news_category,
-    
-    inputs=gr.Textbox(lines=3, placeholder="Enter the headline of the news here..."),
-    
+    inputs=gr.Textbox(lines=3, placeholder="Enter the news headline here..."),
     outputs=gr.Label(), 
-    
     title=title,
     description=description,
     examples=examples
