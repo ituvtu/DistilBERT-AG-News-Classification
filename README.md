@@ -38,3 +38,59 @@ The easiest way to run the project locally is by using the pre-built image from 
 ```bash
 # 1. Pull and run the container
 docker run -p 7860:7860 ituvtu/distilbert-ag-news:v1
+```
+
+Once running, open your browser at: `http://localhost:7860`
+
+## 🔌 API Usage
+
+This application exposes an API endpoint via Gradio, allowing integration with other software.
+
+### Python Client
+
+You can use the `gradio_client` library to query the model programmatically:
+
+```python
+# pip install gradio_client
+from gradio_client import Client
+
+client = Client("ituvtu/DistilBERT-multi-text")
+
+result = client.predict(
+		text="Apple just announced a new VR headset.",
+		api_name="/predict"
+)
+
+print(result)
+```
+
+## 🛠 Local Development
+
+If you prefer to run the code from source:
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/ituvtu/DistilBERT-AG-News-Classification.git
+   cd DistilBERT-AG-News-Classification
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Run the application:**
+   ```bash
+   python src/app.py
+   ```
+
+## 📂 Project Structure
+
+* `notebooks/AG_News_DistilBERT.ipynb` — Complete training cycle: data preparation, fine-tuning, validation, and visualization.
+* `src/app.py` — Inference code and Gradio web interface.
+* `Dockerfile` — Instructions for building the Docker image.
+* `data/examples.json` — Sample news inputs for quick UI testing.
+* `assets/` — Images for documentation (plots, screenshots).
+
+---
+*Developed by [ituvtu](https://github.com/ituvtu)*
