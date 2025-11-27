@@ -3,7 +3,7 @@
 [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Live%20Demo-blue)](https://huggingface.co/spaces/ituvtu/DistilBERT-multi-text)
 [![Docker Hub](https://img.shields.io/badge/Docker%20Hub-Pull%20Image-2496ED)](https://hub.docker.com/repository/docker/ituvtu/distilbert-ag-news)
 [![GitHub](https://img.shields.io/badge/GitHub-Source%20Code-181717)](https://github.com/ituvtu/DistilBERT-AG-News-Classification)
-
+[![Python Tests](https://github.com/ituvtu/DistilBERT-AG-News-Classification/actions/workflows/tests.yml/badge.svg)](https://github.com/ituvtu/DistilBERT-AG-News-Classification/actions/workflows/tests.yml)
 This project implements **Full Fine-Tuning** of the **DistilBERT** model for multi-class news classification. The model categorizes news headlines and short descriptions into 4 classes: **World, Sports, Business, Sci/Tech**.
 
 The solution is deployed as a web application using Gradio and packaged in Docker for easy distribution.
