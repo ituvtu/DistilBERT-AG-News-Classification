@@ -58,7 +58,7 @@ client = Client("ituvtu/DistilBERT-multi-text")
 
 result = client.predict(
 		text="Apple just announced a new VR headset.",
-		api_name="/predict"
+		api_name="/classify_headline"
 )
 
 print(result)
